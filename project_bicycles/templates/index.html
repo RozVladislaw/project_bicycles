@@ -1,0 +1,26 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Учет велосипедов у метро</title>
+</head>
+<body>
+    <h2>Загрузка изображения для учета велосипедов</h2>
+    <input type="file" id="imageInput">
+    <button onclick="upload()">Загрузить и обработать</button>
+    <p id="count"></p>
+    <img id="output" src="" width="600">
+
+    <script>
+        async function upload() {
+            const file = document.getElementById('imageInput').files[0];
+            const formData = new FormData();
+            formData.append('image', file);
+            const response = await fetch('/process', { method: 'POST', body: formData });
+            const data = await response.json();
+            document.getElementById('output').src = '/result?' + new Date().getTime();
+            document.getElementById('count').innerText = 'Обнаружено велосипедов: ' + data.count;
+        }
+    </script>
+</body>
+</html>
